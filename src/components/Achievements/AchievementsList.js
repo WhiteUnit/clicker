@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Achievement from "./Achievement";
 import {achievements} from "./AchievementsData"
@@ -13,7 +13,8 @@ const AchievementsList = (props) => {
             return achievements[0];
         }
     });
-    console.log(props);
+    console.log(localStorage.getItem("quantityOfClicks"));
+    console.log(props.clickStats);
     
   return (
     <ul>

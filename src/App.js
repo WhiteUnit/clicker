@@ -8,23 +8,27 @@ import ShopItemList from "./components/Shop/ShopItemList";
 
 export default function App() {
   const [clicksStats, setClicksStats] = useState();
+  const [afterUpdate, setAfterUpdate] = useState();
   const clicksStatsHandler = (clickCounter) => {
     setClicksStats(clickCounter);
   };
-  console.log(clicksStats);
+  const updateCounterHandler = (upgrade) => {
+    setAfterUpdate(upgrade)
+  }
+  console.log(afterUpdate);
   return (
     <div className="App">
     <Router>
       <Navbar/>
       <Switch>
         <Route exact path="/">
-          <MainButton clicksCounterStats={clicksStatsHandler} />
+          <MainButton afterShop={afterUpdate} clicksCounterStats={clicksStatsHandler} />
         </Route>
         <Route path="/achievements">
           <AchievementsList clickStats={clicksStats} />
         </Route>
         <Route path="/shop">
-          <ShopItemList clicksStats={clicksStats}/>
+          <ShopItemList clicksStats={clicksStats} updateCounter={updateCounterHandler} />
         </Route>
       </Switch>
     </Router>

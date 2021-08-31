@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 const ShopItemList = (props) => {
 
-    console.log(props.clicksStats);
-
-
+    const [autoCounter, setAutoCounter] = useState();
+    const buyUpgrade = () => {
+        setAutoCounter(1);
+        props.updateCounter(autoCounter);
+        console.log(autoCounter);
+    }
     return (
         <div>
-            <button>Add 1 to auto click {props.clicksStats.clicksCounter}</button>
+            <button onClick={buyUpgrade}>Add 1 to auto click</button>
         </div>
     )
 }
