@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import Shop from "./Sites/Shop"
 import "./App.css";
-import AchievementsList from "./components/Archivments/AchievementsList";
+import AchievementsList from "./components/Achievements/AchievementsList";
 import MainButton from "./components/MainButton/MainButton";
 import Navbar from "./components/Navbar/Navbar";
-
+import ShopItemList from "./components/Shop/ShopItemList";
 
 export default function App() {
   const [clicksStats, setClicksStats] = useState();
-  const clickCounterHandler = (clickCounter) => {
+  const clicksStatsHandler = (clickCounter) => {
     setClicksStats(clickCounter);
   };
-
+  console.log(clicksStats);
   return (
     <div className="App">
     <Router>
       <Navbar/>
       <Switch>
         <Route exact path="/">
-          <MainButton clickCounter={clickCounterHandler} />
+          <MainButton clicksCounterStats={clicksStatsHandler} />
         </Route>
         <Route path="/achievements">
           <AchievementsList clickStats={clicksStats} />
         </Route>
         <Route path="/shop">
-          <Shop/>
+          <ShopItemList clicksStats={clicksStats}/>
         </Route>
       </Switch>
     </Router>

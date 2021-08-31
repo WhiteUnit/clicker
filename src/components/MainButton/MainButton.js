@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./MainButton.css";
 import ShowStats from "./ShowStats";
+import { achievements } from "../Achievements/AchievementsData";
 
 const MainButton = (props) => {
   const [clicksCounterStats, setClicksCounterStats] = useState({
     clicksCounter: 0,
     levelsCounter: 0,
+    autoClickCounter: 0,
+    lastAchievement: "",
+    unlockedAchievements: [],
   });
   const maxLevel = 50;
   let levelCapTab = [10];
@@ -15,14 +19,16 @@ const MainButton = (props) => {
     levelCapTab[level] = inicialLevel * 10;
   }
   const clearSave = () => {
-    if (window.confirm('Are you sure you want clear your progress?')) {
-        setClicksCounterStats({
-            ...clicksCounterStats,
-            clicksCounter: 0,
-            levelsCounter: 0
-        });
-      }
-  }
+    if (window.confirm("Are you sure you want clear your progress?")) {
+      setClicksCounterStats({
+        ...clicksCounterStats,
+        clicksCounter: 0,
+        levelsCounter: 0,
+        lastAchievement: "",
+        unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => { return achievements[0]})
+      });
+    }
+  };
 
   // TODO after click lvlUP but counterClick is not moving
   // TODO function for IF statement
@@ -46,10 +52,12 @@ const MainButton = (props) => {
     const interval = setInterval(() => {
       setClicksCounterStats({
         ...clicksCounterStats,
-        clicksCounter: clicksCounterStats.clicksCounter + 1,
+        clicksCounter:
+          clicksCounterStats.clicksCounter +
+          clicksCounterStats.autoClickCounter,
       });
       if (
-        clicksCounterStats.clicksCounter ===
+        clicksCounterStats.clicksCounter >=
         levelCapTab[clicksCounterStats.levelsCounter]
       ) {
         setClicksCounterStats({
@@ -57,22 +65,39 @@ const MainButton = (props) => {
           levelsCounter: clicksCounterStats.levelsCounter + 1,
         });
       }
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
   });
 
   useEffect(() => {
-    props.clickCounter(clicksCounterStats.clicksCounter);
+    setClicksCounterStats({
+      ...clicksCounterStats,
+      unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => {
+        if (
+          clicksCounterStats.clicksCounter >= achieveUnlocked.numberOfClicks
+        ) {
+            alert("You have unlocked achievement: "+ achieveUnlocked.title);
+          return achieveUnlocked;
+        } else {
+          return achievements[0];
+        }
+      }),
+    });
+    console.log(clicksCounterStats.unlockedAchievements);
+    console.log(clicksCounterStats.lastAchievement);
+    props.clicksCounterStats(clicksCounterStats);
   }, [clicksCounterStats.clicksCounter]);
 
   useEffect(() => {
-    const saveGame = JSON.parse(window.localStorage.getItem("quantityOfClicks"));
+    const saveGame = JSON.parse(
+      window.localStorage.getItem("quantityOfClicks")
+    );
     setClicksCounterStats({
       ...clicksCounterStats,
       clicksCounter: saveGame.clicks,
-      levelsCounter: saveGame.levels
-  });
-}, [clicksCounterStats.clicks]);
+      levelsCounter: saveGame.levels,
+    });
+  }, [clicksCounterStats.clicks]);
 
   useEffect(() => {
     const clicksStatsToSave = {
@@ -85,8 +110,6 @@ const MainButton = (props) => {
     );
   });
 
-  
-
   return (
     <div>
       <button onClick={clickEvent}>Click Me</button>
@@ -96,6 +119,7 @@ const MainButton = (props) => {
         achievement={props.achievementData}
       />
       <button onClick={clearSave}>Clear Save</button>
+      <p>{clicksCounterStats.lastAchievement}</p>
     </div>
   );
 };
