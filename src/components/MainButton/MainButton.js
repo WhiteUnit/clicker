@@ -27,6 +27,7 @@ const MainButton = (props) => {
         clicksCounter: 0,
         levelsCounter: 0,
         lastAchievement: "",
+        autoClickCounter: 0,
         unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => {
           return achievements[0];
         }),
@@ -41,6 +42,8 @@ const MainButton = (props) => {
       ...clicksCounterStats,
       clicksCounter: clicksCounterStats.clicksCounter + 1,
     });
+    console.log(clicksCounterStats.clicksCounter + ' ' + levelCapTab[clicksCounterStats.levelsCounter]);
+
     if (
       clicksCounterStats.clicksCounter ===
       levelCapTab[clicksCounterStats.levelsCounter]
@@ -49,19 +52,22 @@ const MainButton = (props) => {
         ...clicksCounterStats,
         levelsCounter: clicksCounterStats.levelsCounter + 1,
       });
+
     }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
+
       setClicksCounterStats({
         ...clicksCounterStats,
         clicksCounter:
-          clicksCounterStats.clicksCounter +
+          clicksCounterStats.clicksCounter + 
           clicksCounterStats.autoClickCounter,
       });
+
       if (
-        clicksCounterStats.clicksCounter >=
+        clicksCounterStats.clicksCounter ===
         levelCapTab[clicksCounterStats.levelsCounter]
       ) {
         setClicksCounterStats({
@@ -102,6 +108,7 @@ const MainButton = (props) => {
       ...clicksCounterStats,
       clicksCounter: saveGame.clicks,
       levelsCounter: saveGame.levels,
+      autoClickCounter: saveGame.autoClick
     });
   }, [clicksCounterStats.clicks]);
   useEffect(() => {
@@ -109,6 +116,7 @@ const MainButton = (props) => {
       clicks: clicksCounterStats.clicksCounter,
       levels: clicksCounterStats.levelsCounter,
       unlockedAchievements: clicksCounterStats.unlockedAchievements,
+      autoClick: clicksCounterStats.autoClickCounter
     };
     window.localStorage.setItem(
       "quantityOfClicks",
@@ -118,14 +126,14 @@ const MainButton = (props) => {
 
   return (
     <div>
-      <button onClick={clickEvent}>Click Me</button>
+        <h2>OK, it's time to go let's quickly shut it down!</h2>
+      <div className="metal radial" onClick={clickEvent}><i class="fas fa-power-off fa-3x"></i></div>
       <ShowStats
         currentClicks={clicksCounterStats.clicksCounter}
         currentLevel={clicksCounterStats.levelsCounter}
         achievement={clicksCounterStats.lastAchievement}
       />
       <button onClick={clearSave}>Clear Save</button>
-      <p>{clicksCounterStats.lastAchievement}</p>
     </div>
   );
 };

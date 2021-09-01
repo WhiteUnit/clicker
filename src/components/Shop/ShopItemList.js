@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 const ShopItemList = (props) => {
 
-    const [autoCounter, setAutoCounter] = useState(0);
-    const buyUpgrade = () => {
-        setAutoCounter(1);
-        props.updateCounter(autoCounter);
-        console.log(autoCounter);
+    const saveGame = JSON.parse(
+        window.localStorage.getItem("quantityOfClicks")
+      );
+      const buyUpgrade = () => {
+        const clicksStatsToSave = {...saveGame, autoClick: 1}
+          localStorage.setItem(
+            "quantityOfClicks",
+            JSON.stringify(clicksStatsToSave)
+          );
     }
     return (
         <div>

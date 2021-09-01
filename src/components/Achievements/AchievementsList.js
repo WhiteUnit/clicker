@@ -11,6 +11,8 @@ const AchievementsList = (props) => {
         <Achievement
           clicks={achievement.numberOfClicks}
           title={achievement.title}
+          unlockedStyle={achievement.unlockedStyle}
+          ledStyle={achievement.ledStyle}
         />
       ))}
     </ul>
