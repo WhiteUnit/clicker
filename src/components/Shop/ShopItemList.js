@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 const ShopItemList = (props) => {
 
-    const [autoCounter, setAutoCounter] = useState();
+    const [autoCounter, setAutoCounter] = useState(0);
     const buyUpgrade = () => {
         setAutoCounter(1);
         props.updateCounter(autoCounter);

@@ -11,15 +11,14 @@ const MainButton = (props) => {
     lastAchievement: "",
     unlockedAchievements: [],
   });
+
   const maxLevel = 50;
   let levelCapTab = [10];
-  let inicialLevel = 1;
+  let initialLevel = 1;
   for (let level = 1; level < maxLevel; level++) {
-    inicialLevel *= 2;
-    levelCapTab[level] = inicialLevel * 10;
+    initialLevel *= 2;
+    levelCapTab[level] = initialLevel * 10;
   }
-
-  console.log(props.afterShop);
 
   const clearSave = () => {
     if (window.confirm("Are you sure you want clear your progress?")) {
@@ -28,7 +27,9 @@ const MainButton = (props) => {
         clicksCounter: 0,
         levelsCounter: 0,
         lastAchievement: "",
-        unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => { return achievements[0]})
+        unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => {
+          return achievements[0];
+        }),
       });
     }
   };
@@ -50,14 +51,14 @@ const MainButton = (props) => {
       });
     }
   };
-console.log("Tutaj" + props.afterShop)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setClicksCounterStats({
         ...clicksCounterStats,
         clicksCounter:
           clicksCounterStats.clicksCounter +
-          props.afterShop,
+          clicksCounterStats.autoClickCounter,
       });
       if (
         clicksCounterStats.clicksCounter >=
@@ -68,7 +69,7 @@ console.log("Tutaj" + props.afterShop)
           levelsCounter: clicksCounterStats.levelsCounter + 1,
         });
       }
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   });
 
@@ -77,9 +78,13 @@ console.log("Tutaj" + props.afterShop)
       ...clicksCounterStats,
       unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => {
         if (
-          clicksCounterStats.clicksCounter === achieveUnlocked.numberOfClicks
+          clicksCounterStats.clicksCounter >= achieveUnlocked.numberOfClicks
         ) {
-            alert("You have unlocked achievement: "+ achieveUnlocked.title);
+          if (
+            clicksCounterStats.clicksCounter === achieveUnlocked.numberOfClicks
+          ) {
+            alert("You have unlocked achievement: " + achieveUnlocked.title);
+          }
           return achieveUnlocked;
         } else {
           return achievements[0];
@@ -99,12 +104,11 @@ console.log("Tutaj" + props.afterShop)
       levelsCounter: saveGame.levels,
     });
   }, [clicksCounterStats.clicks]);
-console.log(clicksCounterStats.autoClickCounter);
   useEffect(() => {
     const clicksStatsToSave = {
       clicks: clicksCounterStats.clicksCounter,
       levels: clicksCounterStats.levelsCounter,
-      unlockedAchievements: clicksCounterStats.unlockedAchievements
+      unlockedAchievements: clicksCounterStats.unlockedAchievements,
     };
     window.localStorage.setItem(
       "quantityOfClicks",
@@ -118,7 +122,7 @@ console.log(clicksCounterStats.autoClickCounter);
       <ShowStats
         currentClicks={clicksCounterStats.clicksCounter}
         currentLevel={clicksCounterStats.levelsCounter}
-        achievement={props.achievementData}
+        achievement={clicksCounterStats.lastAchievement}
       />
       <button onClick={clearSave}>Clear Save</button>
       <p>{clicksCounterStats.lastAchievement}</p>
