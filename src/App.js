@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import AchievementsList from "./components/Achievements/AchievementsList";
 import MainButton from "./components/MainButton/MainButton";
@@ -14,20 +14,20 @@ export default function App() {
   console.log("App: " + clicksStats);
   return (
     <div className="App">
-    <Router>
-      <Navbar/>
-      <Switch>
-        <Route exact path="/">
-          <MainButton clicksCounterStats={clicksStatsHandler} />
-        </Route>
-        <Route path="/achievements">
-          <AchievementsList clickStats={clicksStats} />
-        </Route>
-        <Route path="/shop">
-          <ShopItemList />
-        </Route>
-      </Switch>
-    </Router>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <MainButton clicksCounterStats={clicksStatsHandler} />
+          </Route>
+          <Route path="/achievements">
+            <AchievementsList clickStats={clicksStats} />
+          </Route>
+          <Route path="/shop">
+            <ShopItemList />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

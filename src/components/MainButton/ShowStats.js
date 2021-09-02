@@ -1,9 +1,11 @@
+import React from "react";
+import "./ShowStats.css";
+
 const ShowStats = (props) => {
   return (
     <div>
-      <p>{props.currentClicks}</p>
-      <p>{props.currentLevel}</p>
-      <p>{props.achievement}</p>
+      <p className="data-show">{"Already clicked: " + props.currentClicks}</p>
+      <p className="data-show">{"Level o frustration: " + props.currentLevel}</p>
     </div>
   );
 };

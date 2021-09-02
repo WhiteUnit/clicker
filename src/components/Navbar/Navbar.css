@@ -55,7 +55,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: 266px;
+        height: 309px;
         position: absolute;
         top: 80px;
         left: -100%;
@@ -75,7 +75,8 @@
         padding: 2rem;
         width: 100%;
         display: table;
-        font-size: 1rem;
+        font-size: 1.5rem;
+        font-weight: 500;
     }
     .nav-links:hover{
         background-color: lightslategray;
@@ -92,7 +93,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        transform: translate(-100%, 60%);
+        transform: translate(-100%, 45%);
         font-size: 2rem;
         cursor: pointer;
     }

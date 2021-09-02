@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false);
 
-    const handleClicked = () => {
-        setClicked(!clicked)
-    }
+  const handleClicked = () => {
+    setClicked(!clicked);
+  };
 
   return (
     <nav className="NavbarItems">
-      <h2 className="navbar-logo"><i className="fas fa-mouse-pointer"></i>Simple Clicker</h2>
+      <h2 className="navbar-logo">
+        <i className="fas fa-mouse-pointer"></i>Simple Clicker
+      </h2>
       <div className="menu-icon" onClick={handleClicked}>
         <i className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
       </div>

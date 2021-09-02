@@ -42,7 +42,11 @@ const MainButton = (props) => {
       ...clicksCounterStats,
       clicksCounter: clicksCounterStats.clicksCounter + 1,
     });
-    console.log(clicksCounterStats.clicksCounter + ' ' + levelCapTab[clicksCounterStats.levelsCounter]);
+    console.log(
+      clicksCounterStats.clicksCounter +
+        " " +
+        levelCapTab[clicksCounterStats.levelsCounter]
+    );
 
     if (
       clicksCounterStats.clicksCounter ===
@@ -52,17 +56,15 @@ const MainButton = (props) => {
         ...clicksCounterStats,
         levelsCounter: clicksCounterStats.levelsCounter + 1,
       });
-
     }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-
       setClicksCounterStats({
         ...clicksCounterStats,
         clicksCounter:
-          clicksCounterStats.clicksCounter + 
+          clicksCounterStats.clicksCounter +
           clicksCounterStats.autoClickCounter,
       });
 
@@ -108,7 +110,7 @@ const MainButton = (props) => {
       ...clicksCounterStats,
       clicksCounter: saveGame.clicks,
       levelsCounter: saveGame.levels,
-      autoClickCounter: saveGame.autoClick
+      autoClickCounter: saveGame.autoClick,
     });
   }, [clicksCounterStats.clicks]);
   useEffect(() => {
@@ -116,7 +118,7 @@ const MainButton = (props) => {
       clicks: clicksCounterStats.clicksCounter,
       levels: clicksCounterStats.levelsCounter,
       unlockedAchievements: clicksCounterStats.unlockedAchievements,
-      autoClick: clicksCounterStats.autoClickCounter
+      autoClick: clicksCounterStats.autoClickCounter,
     };
     window.localStorage.setItem(
       "quantityOfClicks",
@@ -126,14 +128,19 @@ const MainButton = (props) => {
 
   return (
     <div>
-        <h2>OK, it's time to go let's quickly shut it down!</h2>
-      <div className="metal radial" onClick={clickEvent}><i class="fas fa-power-off fa-3x"></i></div>
+      <h2 className="head">OK, it's time to go home, let's quickly shut it down!</h2>
+      <h3>I just need to click one button...</h3>
+      <div className="center metal radial" onClick={clickEvent}>
+        <i class="fas fa-power-off fa-3x"></i>
+      </div>
       <ShowStats
         currentClicks={clicksCounterStats.clicksCounter}
         currentLevel={clicksCounterStats.levelsCounter}
         achievement={clicksCounterStats.lastAchievement}
       />
-      <button onClick={clearSave}>Clear Save</button>
+      <div className="center metal radial small" onClick={clearSave}>
+        <div className="save-words">Clear Save</div>
+      </div>
     </div>
   );
 };
