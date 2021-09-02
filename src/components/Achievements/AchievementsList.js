@@ -3,8 +3,6 @@ import Achievement from "./Achievement";
 
 const AchievementsList = (props) => {
   let saveAchievements = JSON.parse(localStorage.getItem("quantityOfClicks"));
-  console.log(props.clickStats);
-  console.log(saveAchievements.unlockedAchievements);
   return (
     <ul>
       {saveAchievements.unlockedAchievements.map((achievement) => (

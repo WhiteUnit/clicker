@@ -11,14 +11,13 @@ export default function App() {
   const clicksStatsHandler = (clickCounter) => {
     setClicksStats(clickCounter);
   };
-  console.log("App: " + clicksStats);
   return (
     <div className="App">
       <Router>
         <Navbar />
         <Switch>
           <Route exact path="/">
-            <MainButton clicksCounterStats={clicksStatsHandler} />
+            <MainButton Stats={clicksStatsHandler} />
           </Route>
           <Route path="/achievements">
             <AchievementsList clickStats={clicksStats} />
