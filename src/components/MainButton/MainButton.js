@@ -4,7 +4,7 @@ import ShowStats from "./ShowStats";
 import { achievements } from "../Achievements/AchievementsData";
 
 const MainButton = (props) => {
-  const [Stats, setStats] = useState({
+  const [score, setScore] = useState({
     clicksCounter: 0,
     levelsCounter: 0,
     autoClickCounter: 0,
@@ -20,8 +20,8 @@ const MainButton = (props) => {
 
   const clearSave = () => {
     if (window.confirm("Are you sure you want clear your progress?")) {
-      setStats({
-        ...Stats,
+      setScore({
+        ...score,
         clicksCounter: 0,
         levelsCounter: 0,
         autoClickCounter: 0,
@@ -35,31 +35,31 @@ const MainButton = (props) => {
   // TODO after click lvlUP but counterClick is not moving
 
   const clickEvent = () => {
-    setStats({
-      ...Stats,
-      clicksCounter: Stats.clicksCounter + 1,
+    setScore({
+      ...score,
+      clicksCounter: score.clicksCounter + 1,
     });
-    levelUp(Stats.clicksCounter, Stats.levelsCounter);
+    levelUp(score.clicksCounter, score.levelsCounter);
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStats({
-        ...Stats,
-        clicksCounter: Stats.clicksCounter + Stats.autoClickCounter,
+      setScore({
+        ...score,
+        clicksCounter: score.clicksCounter + score.autoClickCounter,
       });
 
-      levelUp(Stats.clicksCounter, Stats.levelsCounter);
+      levelUp(score.clicksCounter, score.levelsCounter);
     }, 1000);
     return () => clearInterval(interval);
   });
 
   useEffect(() => {
-    setStats({
-      ...Stats,
+    setScore({
+      ...score,
       unlockedAchievements: achievements.slice(1).map((achieveUnlocked) => {
-        if (Stats.clicksCounter >= achieveUnlocked.numberOfClicks) {
-          if (Stats.clicksCounter === achieveUnlocked.numberOfClicks) {
+        if (score.clicksCounter >= achieveUnlocked.numberOfClicks) {
+          if (score.clicksCounter === achieveUnlocked.numberOfClicks) {
             alert("You have unlocked achievement: " + achieveUnlocked.title);
           }
           return achieveUnlocked;
@@ -68,26 +68,26 @@ const MainButton = (props) => {
         }
       }),
     });
-    props.Stats(Stats);
-  }, [Stats.clicksCounter]);
+    props.score(score);
+  }, [score.clicksCounter]);
 
   useEffect(() => {
     const saveGame = JSON.parse(
       window.localStorage.getItem("quantityOfClicks")
     );
-    setStats({
-      ...Stats,
+    setScore({
+      ...score,
       clicksCounter: saveGame.clicks,
       levelsCounter: saveGame.levels,
       autoClickCounter: saveGame.autoClick,
     });
-  }, [Stats.clicks]);
+  }, [score.clicks]);
   useEffect(() => {
     const clicksStatsToSave = {
-      clicks: Stats.clicksCounter,
-      levels: Stats.levelsCounter,
-      unlockedAchievements: Stats.unlockedAchievements,
-      autoClick: Stats.autoClickCounter,
+      clicks: score.clicksCounter,
+      levels: score.levelsCounter,
+      unlockedAchievements: score.unlockedAchievements,
+      autoClick: score.autoClickCounter,
     };
     window.localStorage.setItem(
       "quantityOfClicks",
@@ -97,9 +97,9 @@ const MainButton = (props) => {
 
   const levelUp = (clicks, level) => {
     if (clicks === levelCapTab[level]) {
-      setStats({
-        ...Stats,
-        levelsCounter: Stats.levelsCounter + 1,
+      setScore({
+        ...score,
+        levelsCounter: score.levelsCounter + 1,
       });
     }
   };
@@ -114,8 +114,8 @@ const MainButton = (props) => {
         <i class="fas fa-power-off fa-3x"></i>
       </div>
       <ShowStats
-        currentClicks={Stats.clicksCounter}
-        currentLevel={Stats.levelsCounter}
+        currentClicks={score.clicksCounter}
+        currentLevel={score.levelsCounter}
       />
       <div className="center metal radial small" onClick={clearSave}>
         <div className="save-words">Clear Save</div>

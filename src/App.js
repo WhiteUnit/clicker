@@ -14,13 +14,13 @@ export default function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar id="nav" />
         <Switch>
           <Route exact path="/">
-            <MainButton Stats={clicksStatsHandler} />
+            <MainButton score={clicksStatsHandler} />
           </Route>
           <Route path="/achievements">
-            <AchievementsList clickStats={clicksStats} />
+            <AchievementsList />
           </Route>
           <Route path="/shop">
             <ShopItemList />

@@ -1,7 +1,7 @@
 import React from "react";
 import Achievement from "./Achievement";
 
-const AchievementsList = (props) => {
+const AchievementsList = () => {
   let saveAchievements = JSON.parse(localStorage.getItem("quantityOfClicks"));
   return (
     <ul>
